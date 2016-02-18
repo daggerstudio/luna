@@ -31,9 +31,9 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/jonreader/Luna.git"
+    "url": "https://github.com/daggerstudio/luna.git"
   },
-  "author": "jonreader",
+  "author": "daggerstudios",
   "license": "",
   "devDependencies": {
     "jade": "^1.11.0"
