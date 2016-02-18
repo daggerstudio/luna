@@ -1,0 +1,8 @@
+ul
+    
+if(res.meta == "project")
+    li: a(href="/#{res.slug}/tasks/") Tasks
+    li: a(href="/#{res.slug}/epics/") Epics 
+    li: a(href="/#{res.slug}/sprints/") Sprints
+    li.pull-right: a(href="/#{res.slug}/settings/") Settings
+    li.pull-right: a.btn.ghost(href="/#{res.slug}/tasks/create/") Create

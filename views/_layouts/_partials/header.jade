@@ -1,0 +1,41 @@
+html(lang="en")
+
+    head
+        title Luna 
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1")
+        //- link(rel="stylesheet" href="/styles/element.services.css") 
+        link(rel="stylesheet" href="http://element:8888/styles/element.services.min.css")  
+
+    body
+    
+        .interface
+            header.main
+                span.brand L 
+                
+                nav: ul 
+                    li: a.icon-project(href="/projects/") Projects
+                    li: a.icon-launch(href="#") Launches
+                    li: a.icon-users(href="#") Users
+                    li: a.icon-settings(href="#") Settings 
+                    li: a.icon-logout(href="#") Logout  
+            
+            if(project || missions)
+                .sub
+                    a(href="/#{project.slug}/") 
+                        if(project)
+                            h1.title #{project.name}
+                        else if(missions)
+                            h1.title #{missions[0].project} 
+                     
+                    nav: ul 
+                        li: a(href="/#{project.slug}/missions/") Missions
+                        li: a(href="/#{project.slug}/epics/") Epics
+                        li: a(href="/#{project.slug}/logs/") Logs
+                        li.pull-right: a(href="settings/") Settings
+                        li.pull-right: a(href="/#{project.slug}/missions/create/") Create
+                    
+            .content
+                block content 
+                
+    

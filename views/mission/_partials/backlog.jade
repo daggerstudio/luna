@@ -1,0 +1,12 @@
+.cover: .container: .row
+
+    if(missions[0])  
+        h2.title.divider Mission Backlog
+        ul
+        each mission in missions
+            li.mission.hor: a(href="/#{project.slug}/missions/#{mission.slug}/"): h3 #{mission.name} 
+                small #{mission.workflow}        
+    else
+        h2.title Missions
+        p.callout #{project.name} project has no missions. Why don't you get started and 
+            a(href="/#{project.slug}/missions/create/") create one?

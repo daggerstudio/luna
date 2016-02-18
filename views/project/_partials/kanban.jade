@@ -1,0 +1,29 @@
+if(missions[0]) 
+    .cover: .container: .row.row-inline._4
+        h2.sr Kanban
+        .workflow
+            each item in manifest
+                .col
+                    h2.heading #{item.name}
+                        small #{item.limit}
+                    ul.workflow-column(data-workflow="#{item.name}" data-limit="#{item.limit}")
+                        each mission in item.missions
+                            li.mission(class="#{mission.priority}" data-payload="#{JSON.stringify(mission)}")
+                            
+                                a.user(href="#")
+                                    img(
+                                    src="http://placehold.it/100x100"
+                                    alt="#{mission.assigned}"
+                                    title="#{mission.assigned}")
+                                
+                                h3.title #{mission.name}
+                                
+                                .meta
+                                    small.type #{mission.type}
+                                    a(
+                                        href="/#{project.slug}/missions/#{mission.slug}/edit/"
+                                    ).edit.icon-settings &nbsp;
+                                    
+                                a.faux(href="/#{project.slug}/missions/#{mission.slug}/")
+                            
+                        

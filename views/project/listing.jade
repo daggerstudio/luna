@@ -1,0 +1,10 @@
+extend ../_layouts/listing
+
+block list
+
+    .row
+    
+        ul
+            each result in results
+                li
+                    a(href="/#{result.slug}/"): h2 #{result.name}

@@ -1,0 +1,55 @@
+html 
+
+    head
+        title #{title}
+    
+    body
+        
+        form(action="/mission/new/" method="POST") 
+        
+            label Name 
+            input(name="name" type="text") 
+            
+            label Project (Current: #{currentProject}) 
+            select(name="project")
+                each project in projects 
+                    if(project.slug == currentProject)
+                        option(value="#{project.name}" selected) #{project.name}
+                    else
+                        option(value="#{project.name}") #{project.name}
+            
+            label Epic
+            input(name="epic" type="text")
+            
+            label Type
+            select(name="type")
+                option(value="task" selected) Task
+                option(value="bug") Bug
+                option(value="story") Story
+                option(value="ideation") Ideation
+                option(value="research") Research
+            
+            label Desc 
+            input(name="desc" type="text")
+ 
+            label Priority
+            select(name="priority") 
+                each priority in priorities 
+                    if(priority == "medium")
+                        option(value="#{priority}" selected) #{priority} 
+                    else
+                        option(value="#{priority}") #{priority} 
+                        
+            label Workflow
+            select(name="workflow") 
+                each state in workflow 
+                    if(state == "open")
+                        option(value="#{state}" selected) #{state} 
+                    else
+                        option(value="#{state}") #{state} 
+                            
+            label Assigned
+            input(name="assigned" type="text")  
+            
+            input(type="submit" value="Submit") 
+ 
