@@ -1,6 +1,8 @@
 //==============================================================================
 // MISSION CONTROLLER
 //==============================================================================
+var markdown = require("markdown").markdown;
+
 
 module.exports = {
 
@@ -47,22 +49,8 @@ module.exports = {
   //----------------------------------------------------------------------------
   view: function (req, res) {
 
-    Missions.single(req, res, false, function (mission, project) {
-      return res.view("mission/view", {
-        title: "Mission View",
-        project: project,
-        mission: mission
-      });
-    });
-
-  },
-
-  // Single Mission Edit
-  //----------------------------------------------------------------------------
-  edit: function (req, res) {
-
     Missions.single(req, res, true, function (mission, project, projectList) {
-      return res.view("mission/edit", {
+      return res.view("mission/view", {
         title: "Mission View",
         action: "/mission/update/",
         types: List.types(),
@@ -105,6 +93,8 @@ module.exports = {
 
     var b = req.body; // Reference to req.body
 
+    console.log(Mod.uid(b.name));
+
     // If the request want's JSON and does not supply absolute name
     if (req.wantsJSON && !b.absName) b.absName = b.name;
 
@@ -114,12 +104,11 @@ module.exports = {
       name: b.name,
       meta: "mission",
       slug: Mod.slugify(b.name),
-      complete: b.complete,
+      complete: b.complete || false,
       project: b.project,
       projectSlug: Mod.slugify(b.project),
       epic: b.epic,
       type: b.type,
-      desc: b.desc,
       priority: b.priority,
       workflow: b.workflow,
       assigned: b.assigned,
@@ -130,10 +119,6 @@ module.exports = {
 
       // Success
       else {
-
-        if (req.isSocket) {
-          console.log("Socket Yo!");
-        }
 
         // Log success to the console
         sails.log.info("Mission " + updated[0].name + " updated.");
@@ -148,7 +133,7 @@ module.exports = {
     });
   },
 
-  // New Request
+  // New
   //----------------------------------------------------------------------------
   new: function (req, res) {
 
@@ -178,5 +163,23 @@ module.exports = {
         return res.redirect("/" + created.projectSlug + "/missions/" + created.slug + "/");
       }
     });
+  },
+
+  delete: function (req, res) {
+
+    var b = req.body; // Reference to req.body
+
+    Mission.destroy({
+      name: b.slug
+    }).exec(function (err) {
+
+      // Error
+      if (err) return res.negotiate(err);
+
+      // Success
+      sails.log.info(b.name + " mission has be deleted.");
+      return res.redirect("/" + b.projectSlug + "/");
+    });
   }
+
 };

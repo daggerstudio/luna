@@ -49,21 +49,21 @@ module.exports.routes = {
   },
 
   // Single Project Edit
-  "/projects/edit/:project": {
+  "get /projects/:project/edit": {
     controller: "Project",
     action: "edit",
     skipAssets: true
   },
 
   // Listing Project
-  "/projects/": {
+  "get /projects/": {
     controller: "Project",
     action: "listing",
     skipAssets: true
   },
 
   // Single Project View
-  "/:project/": {
+  "get /:project/": {
     controller: "Project",
     action: "view",
     skipAssets: true
@@ -86,17 +86,17 @@ module.exports.routes = {
     skipAssets: true
   },
 
-  // Single Task Create
-  "get /:project/missions/create/": {
+  // Delete Mission
+  "post /missions/delete/": {
     controller: "Mission",
-    action: "create",
+    action: "delete",
     skipAssets: true
   },
 
-  // Single Task Edit
-  "get /:project/missions/:slug/edit/": {
+  // Single Mission Create
+  "get /:project/missions/create/": {
     controller: "Mission",
-    action: "edit",
+    action: "create",
     skipAssets: true
   },
 
@@ -107,14 +107,14 @@ module.exports.routes = {
     skipAssets: true
   },
 
-  // Single Task View
+  // Single Mission View
   "get /:project/missions/:slug/": {
     controller: "Mission",
     action: "view",
     skipAssets: true
   },
 
-  // Listing Task
+  // Listing Mission
   "get /:project/missions/": {
     controller: "Mission",
     action: "listing",

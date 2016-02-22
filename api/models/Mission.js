@@ -9,6 +9,7 @@ module.exports = {
   connection: "redis",
   schema: false,
   autoCreatedAt: true,
+  autoUpdatedAt: true,
   attributes: {
     name: "string",
     class: "string",
@@ -17,24 +18,29 @@ module.exports = {
     projectSlug: "string",
     epic: "string",
     complete: {
-        type: "boolean",
-        defaultsTo: false
+      type: "boolean",
+      defaultsTo: false
     },
-    type:{
-        type:"string",
-        enum: List.types(),
-        defaultsTo: "task"
+    type: {
+      type: "string",
+      enum: List.types(),
+      defaultsTo: "task"
     },
-    desc: "string",
+    summaryMarkdown: {
+      type: "string",
+    },
+    summaryParsed: {
+      type: "string",
+    },
     priority: {
-        type: "string",
-        enum: List.priorities(),
-        defaultsTo: "medium"
+      type: "string",
+      enum: List.priorities(),
+      defaultsTo: "medium"
     },
     workflow: {
-        type: "string",
-        enum: List.lanes(),
-        defaultsTo: "backlog"
+      type: "string",
+      enum: List.lanes(),
+      defaultsTo: "backlog"
     },
     assigned: "string",
   }

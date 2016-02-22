@@ -1,14 +1,30 @@
 extend ../_layouts/standard.jade
 
-block content 
+block content
 
-    div #{mission.name}
-    div #{mission.slug}
-    div Complete: #{mission.complete}
-    div #{mission.project}
-    div #{mission.epic}
-    div #{mission.type}
-    div #{mission.desc}
-    div #{mission.priority}
-    div #{mission.workflow} 
-    div #{mission.assigned} 
+    .cover: .container.fluid
+    
+        .row: .col
+            span.btn.pull-right(panel="standard" panel-target="#mission-edit") Edit Mission
+            
+        .row
+        
+            div #{mission.name}
+            div #{mission.slug}
+            div Complete: #{mission.complete}
+            div #{mission.project}
+            div Slug: #{mission.projectSlug}
+            div #{mission.epic}
+            div #{mission.type}
+            div !{mission.summaryParsed}
+            div #{mission.summaryMarkdown}
+            div #{mission.priority}
+            div #{mission.workflow} 
+            div #{mission.assigned}
+                
+    
+    #mission-edit.panel-aside
+        span.btn.close(panel="standard" panel-target="#mission-edit")
+        
+        include _partials/edit
+    

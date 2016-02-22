@@ -1,3 +1,4 @@
+doctype html
 html(lang="en")
 
     head
@@ -9,7 +10,7 @@ html(lang="en")
 
     body
     
-        .interface
+        .interface 
             header.main
                 span.brand Orbit
                 
@@ -35,7 +36,6 @@ html(lang="en")
                         li.pull-right: a(href="settings/") Settings
                         li.pull-right: a(href="/#{project.slug}/missions/create/") Create
                     
-            .content
+            .content.js-panel
                 block content 
-                
-    
+            

@@ -42,11 +42,11 @@ module.exports = {
     var projectSlug = req.params.project;
 
     // Get project list
-    var list = function(missions, project){
+    var list = function (missions, project) {
 
-        List.projects(function(err, projectList){
-            cb(missions, project, projectList);
-        });
+      List.projects(function (err, projectList) {
+        cb(missions, project, projectList);
+      });
     };
 
     // Get project details
@@ -60,7 +60,7 @@ module.exports = {
         if (err) return res.negotiate(err);
 
         // Success
-        if(edit) list(missions, project);
+        if (edit) list(missions, project);
         else cb(missions, project);
 
       });
@@ -78,5 +78,13 @@ module.exports = {
       // Success
       details(mission);
     });
+  },
+
+  // Mission Populate
+  //----------------------------------------------------------------------------
+  populate: function(){
+
   }
+
+
 };

@@ -1,0 +1,90 @@
+.cover.light: .container
+
+    form(action="/mission/update/" method="POST")
+        
+        .row: .col
+            .field-group
+                label Name 
+                input.full(name="name" type="text" value="#{mission.name}")
+                
+                input.sr(name="absName" type="text" value="#{mission.name}")
+                
+            .field-group
+                label Mission Summary
+                textarea.full(name="summaryMarkdown" type="text") #{mission.summaryMarkdown} 
+                
+        .row
+        
+            .col
+                    
+                .field-group
+                    label Project
+                    select.small(name="project")
+                        each list in projectList
+                            if(list.name == project.name)
+                                option(value="#{list.name}" selected) #{list.name}
+                            else
+                                option(value="#{list.name}") #{list.name}
+                .field-group
+                    label Priority
+                    select.small(name="priority") 
+                        each priority in priorities
+                            if(priority == mission.priority)
+                                option(value="#{priority}" selected) #{priority} 
+                            else
+                                option(value="#{priority}") #{priority}
+                    
+            .col
+            
+                .field-group    
+                    label Type
+                    select.small(name="type")
+                        each type in types
+                            if(type == mission.type)
+                                option(value="#{type}" selected) #{type}
+                            else 
+                                option(value="#{type}") #{type}
+                                
+                .field-group
+                    label Assigned
+                    select.small(name="assigned") 
+                        each assigned in users
+                            if(assigned == mission.assigned)
+                                option(value="#{assigned}" selected) #{assigned} 
+                            else
+                                option(value="#{assigned}") #{assigned}
+                
+            .col
+            
+                .field-group    
+                    label Epic
+                    input.small(name="epic" type="text" value="#{mission.epic}") 
+                    
+                .field-group
+                    if(mission.complete)
+                        input#edit-complete(type="checkbox" name="complete" value="true" checked)
+                    else
+                        input#edit-complete(type="checkbox" name="complete" value="true") 
+                    label(for="edit-complete") Complete     
+                
+            .col
+            
+                .field-group    
+                    label State
+                    select.small(name="workflow") 
+                        each state in workflow 
+                            if(state == mission.workflow)
+                                option(value="#{state}" selected) #{state} 
+                            else
+                                option(value="#{state}") #{state}
+                                
+        .row: .col
+            input.btn.primary(type="submit" value="Update Mission")
+            input.btn.ghost.pull-right(type="submit" value="Delete Mission")
+            
+    form(action="/mission/delete/" method="POST")
+        input.sr(name="name" value="#{mission.name}") 
+        input.sr(name="slug" value="#{mission.slug}") 
+        input.sr(name="projectSlug" value="#{mission.projectSlug}")
+        input.btn.ghost.pull-right(type="submit" value="Real (temp) Delete Mission")
+    
