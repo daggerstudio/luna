@@ -39,14 +39,6 @@ html
                         option(value="#{priority}" selected) #{priority} 
                     else
                         option(value="#{priority}") #{priority} 
-                        
-            label Workflow
-            select(name="workflow") 
-                each state in workflow 
-                    if(state == "open")
-                        option(value="#{state}" selected) #{state} 
-                    else
-                        option(value="#{state}") #{state} 
                             
             label Assigned
             input(name="assigned" type="text")  

@@ -34,7 +34,7 @@ module.exports = {
     workflow: {
         type: "string",
         enum: List.lanes(),
-        defaultsTo: "open"
+        defaultsTo: "backlog"
     },
     assigned: "string",
   }
