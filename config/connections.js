@@ -29,7 +29,7 @@ module.exports.connections = {
    *                                                                          *
    ***************************************************************************/
   localDiskDb: {
-    adapter: 'sails-disk'
+    adapter: "sails-disk"
   },
 
 
@@ -38,11 +38,11 @@ module.exports.connections = {
   // Redis Connection
 
   redis: {
-    adapter: 'sails-redis',
+    adapter: "sails-redis",
     port: 14560,
-    host: 'pub-redis-14560.eu-west-1-1.1.ec2.garantiadata.com',
-    user: 'rediscloud',
-    password: 'v4O7TtBgWtThhkpL'
+    host: "pub-redis-14560.eu-west-1-1.1.ec2.garantiadata.com",
+    user: "rediscloud",
+    password: "v4O7TtBgWtThhkpL"
   },
   //redis://rediscloud:v4O7TtBgWtThhkpL@pub-redis-14560.eu-west-1-1.1.ec2.garantiadata.com:14560
 
@@ -70,14 +70,16 @@ module.exports.connections = {
    * Run: npm install sails-mongo                                             *
    *                                                                          *
    ***************************************************************************/
-  // someMongodbServer: {
-  //   adapter: 'sails-mongo',
-  //   host: 'localhost',
-  //   port: 27017,
-  //   // user: 'username',
-  //   // password: 'password',
-  //   // database: 'your_mongo_db_name_here'
-  // },
+  mongo: {
+    adapter: "sails-mongo",
+    host: "ds055935.mongolab.com",
+    port: 55935,
+    user: "heroku_hngsmdcb",
+    password: "n9mvsqtulr3nthvpg3hl1v33r0",
+    database: "heroku_hngsmdcb"
+
+    //mongodb://heroku_hngsmdcb:n9mvsqtulr3nthvpg3hl1v33r0@ds055935.mongolab.com:55935/heroku_hngsmdcb
+  },
 
   /***************************************************************************
    *                                                                          *
