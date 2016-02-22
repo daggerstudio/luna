@@ -11,7 +11,7 @@ html(lang="en")
     
         .interface
             header.main
-                span.brand L 
+                span.brand Orbit
                 
                 nav: ul 
                     li: a.icon-project(href="/projects/") Projects
@@ -29,7 +29,7 @@ html(lang="en")
                             h1.title #{missions[0].project} 
                      
                     nav: ul 
-                        li: a(href="/#{project.slug}/missions/") Missions
+                        li: a(href="/#{project.slug}/missions/complete/") Completed Missions (TEMP)
                         li: a(href="/#{project.slug}/epics/") Epics
                         li: a(href="/#{project.slug}/logs/") Logs
                         li.pull-right: a(href="settings/") Settings

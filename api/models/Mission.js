@@ -16,6 +16,10 @@ module.exports = {
     project: "string",
     projectSlug: "string",
     epic: "string",
+    complete: {
+        type: "boolean",
+        defaultsTo: false
+    },
     type:{
         type:"string",
         enum: List.types(),

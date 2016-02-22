@@ -19,6 +19,29 @@ module.exports = {
 
   },
 
+  // Closed Mission Listing
+  //----------------------------------------------------------------------------
+  complete: function (req, res) {
+
+    var completedMissions = [];
+
+    Missions.all(req, res, false, function (missions, project) {
+
+      missions.forEach(function (mission) {
+
+        if (mission.complete) completedMissions.push(mission);
+
+      });
+
+      return res.view("mission/listing", {
+        title: "Mission Listing",
+        project: project,
+        missions: completedMissions
+      });
+    });
+
+  },
+
 
   // Single Mission View
   //----------------------------------------------------------------------------
@@ -91,6 +114,7 @@ module.exports = {
       name: b.name,
       meta: "mission",
       slug: Mod.slugify(b.name),
+      complete: b.complete,
       project: b.project,
       projectSlug: Mod.slugify(b.project),
       epic: b.epic,
@@ -107,11 +131,15 @@ module.exports = {
       // Success
       else {
 
+        if (req.isSocket) {
+          console.log("Socket Yo!");
+        }
+
         // Log success to the console
         sails.log.info("Mission " + updated[0].name + " updated.");
 
         // Send response
-        if (req.wantsJSON) return res.ok({error: null, message: "Workflow updated for " + updated[0].name + "."});
+        if (req.wantsJSON) return res.ok();
 
         // Redirect the user
         return res.redirect("/" + updated[0].projectSlug + "/missions/" + updated[0].slug + "/");
@@ -150,5 +178,5 @@ module.exports = {
         return res.redirect("/" + created.projectSlug + "/missions/" + created.slug + "/");
       }
     });
-  },
+  }
 };

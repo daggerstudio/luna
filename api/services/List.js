@@ -22,12 +22,12 @@ module.exports = {
   },
 
   limits: function () {
-    return [6, 3, 2, 10];
+    return [10000, 12, 2, 4, 10];
   },
 
   lanes: function () {
 
-    return ["open", "in-progress", "sign-off", "done"];
+    return ["backlog","open", "in-progress", "sign-off", "done"];
   },
 
   missions: function (projectSlug, cb) {

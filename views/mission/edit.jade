@@ -2,9 +2,18 @@ form(action="/mission/update/" method="POST")
 
     label Name 
     input(name="name" type="text" value="#{mission.name}")
+    br
     
     label Previous Name 
     input(name="absName" type="text" value="#{mission.name}") 
+    br
+    
+    label Complete
+    input(type="radio" name="complete" value="true")
+    | True
+    input(type="radio" name="complete" value="false" checked)
+    | False
+    br
     
     label Project
     select(name="project")
@@ -13,9 +22,11 @@ form(action="/mission/update/" method="POST")
                 option(value="#{list.name}" selected) #{list.name}
             else
                 option(value="#{list.name}") #{list.name}
+    br
     
     label Epic
     input(name="epic" type="text" value="#{mission.epic}") 
+    br
     
     label Type
     select(name="type")
@@ -23,11 +34,14 @@ form(action="/mission/update/" method="POST")
             if(type == mission.type)
                 option(value="#{type}" selected) #{type}
             else 
-                option(value="#{type}") #{type}
-            
+                option(value="#{type}") #{type}        
+    br
+    
     
     label Desc 
     input(name="desc" type="text" value="#{mission.desc}")
+    br
+
 
     label Priority
     select(name="priority") 
@@ -36,6 +50,8 @@ form(action="/mission/update/" method="POST")
                 option(value="#{priority}" selected) #{priority} 
             else
                 option(value="#{priority}") #{priority} 
+    br
+    
                 
     label Workflow
     select(name="workflow") 
@@ -44,7 +60,9 @@ form(action="/mission/update/" method="POST")
                 option(value="#{state}" selected) #{state} 
             else
                 option(value="#{state}") #{state}
-                
+    br            
+    
+    
     label Assigned
     select(name="assigned") 
         each assigned in users
@@ -52,5 +70,6 @@ form(action="/mission/update/" method="POST")
                 option(value="#{assigned}" selected) #{assigned} 
             else
                 option(value="#{assigned}") #{assigned} 
+    br
     
     input(type="submit" value="Submit") 

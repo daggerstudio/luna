@@ -31,7 +31,7 @@ module.exports.routes = {
   },
 
 
-  // Projects
+  // PROJECTS
   //----------------------------------------------------------------------------
 
   // New Project
@@ -69,7 +69,7 @@ module.exports.routes = {
     skipAssets: true
   },
 
-  // Tasks
+  // MISSIONS
   //----------------------------------------------------------------------------
 
   // New Mission
@@ -97,6 +97,13 @@ module.exports.routes = {
   "get /:project/missions/:slug/edit/": {
     controller: "Mission",
     action: "edit",
+    skipAssets: true
+  },
+
+  // Completed Missions
+  "get /:project/missions/complete/": {
+    controller: "Mission",
+    action: "complete",
     skipAssets: true
   },
 

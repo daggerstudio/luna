@@ -3,27 +3,60 @@ if(missions[0])
         h2.sr Kanban
         .workflow
             each item in manifest
-                .col
-                    h2.heading #{item.name}
-                        small #{item.limit}
-                    ul.workflow-column(data-workflow="#{item.name}" data-limit="#{item.limit}")
-                        each mission in item.missions
-                            li.mission(class="#{mission.priority}" data-payload="#{JSON.stringify(mission)}")
-                            
-                                a.user(href="#")
-                                    img(
-                                    src="http://placehold.it/100x100"
-                                    alt="#{mission.assigned}"
-                                    title="#{mission.assigned}")
+                if(item.name !== "backlog")
+                    .col 
+                        h2.heading #{item.name}
+                            small  (#{item.limit})
+                        ul.workflow-column(data-workflow="#{item.name}" data-limit="#{item.limit}")
+                            each mission in item.missions
+                                li.mission(
+                                    id="#{mission.slug}"
+                                    class="#{mission.priority}"
+                                    data-payload="#{JSON.stringify(mission)}")
                                 
-                                h3.title #{mission.name}
-                                
-                                .meta
-                                    small.type #{mission.type}
-                                    a(
-                                        href="/#{project.slug}/missions/#{mission.slug}/edit/"
-                                    ).edit.icon-settings &nbsp;
+                                    a.user(href="#")
+                                        img(
+                                        src="http://placehold.it/100x100"
+                                        alt="#{mission.assigned}"
+                                        title="#{mission.assigned}")
                                     
-                                a.faux(href="/#{project.slug}/missions/#{mission.slug}/")
-                            
+                                    h3.title #{mission.name}
+                                    
+                                    .meta
+                                        small.type #{mission.type}
+                                        a(
+                                            href="/#{project.slug}/missions/#{mission.slug}/edit/"
+                                        ).edit.icon-settings &nbsp;
+                                        
+                                    a.faux(href="/#{project.slug}/missions/#{mission.slug}/")
+                                    
+                                    
+    .cover: .container: .row
+        h2.title Mission Backlog
+        each item in manifest
+            if(item.name == "backlog")
+                ul.workflow-column.no-padding(data-workflow="#{item.name}" data-limit="#{item.limit}")
+                    each mission in item.missions
+                        li.mission.wide(
+                            id="#{mission.slug}"
+                            class="#{mission.priority}"
+                            data-payload="#{JSON.stringify(mission)}")
                         
+                            a.user(href="#")
+                                img(
+                                src="http://placehold.it/100x100"
+                                alt="#{mission.assigned}"
+                                title="#{mission.assigned}")
+                            
+                            h3.title #{mission.name}
+                            
+                            .meta
+                                small.type #{mission.type}
+                                a(
+                                    href="/#{project.slug}/missions/#{mission.slug}/edit/"
+                                ).edit.icon-settings &nbsp;
+                                
+                            a.faux(href="/#{project.slug}/missions/#{mission.slug}/")
+        
+                
+                
