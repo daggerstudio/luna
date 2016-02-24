@@ -37,52 +37,63 @@ module.exports = {
 
   // Single Mission
   //----------------------------------------------------------------------------
-  single: function (req, res, edit, cb) {
+  single: function (req, res, cb) {
 
-    var projectSlug = req.params.project;
-
-    // Get project list
-    var list = function (missions, project) {
-
-      List.projects(function (err, projectList) {
-        cb(missions, project, projectList);
-      });
-    };
-
-    // Get project details
-    var details = function (missions) {
-
-      Project.findOne({
-        slug: projectSlug
-      }).exec(function (err, project) {
-
-        // Error
-        if (err) return res.negotiate(err);
-
-        // Success
-        if (edit) list(missions, project);
-        else cb(missions, project);
-
-      });
-    };
+    var p = req.params;
 
     Mission.findOne({
       meta: "mission",
-      slug: req.params.slug,
-      projectSlug: req.params.project,
+      slug: p.missionSlug,
+      projectSlug: p.projectSlug,
     }).exec(function (err, mission) {
-
-      // Error
-      if (err) return res.negotiate(err);
-
-      // Success
-      details(mission);
+      cb(err, mission);
     });
   },
 
   // Mission Populate
   //----------------------------------------------------------------------------
-  populate: function(){
+  populate: function (req, res, update, cb) {
+
+    var b = req.body; // Reference to req.body
+    var id = b.id;
+
+    var data = {};
+
+    if (b.name) {
+      data.name = b.name;
+      data.slug = Mod.slugify(b.name);
+    }
+
+    if (b.project) {
+      data.project = b.project;
+      data.projectSlug = Mod.slugify(b.project);
+    }
+
+    if (b.epic) {
+      data.epic = b.epic;
+      data.epic = Mod.slugify(b.epic);
+    }
+
+    if (b.type) data.type = b.type;
+    if (b.priority) data.priority = b.priority;
+    if (b.workflow) data.workflow = b.workflow;
+    if (b.assigned) data.assigned = b.assigned;
+    if (b.complete) data.assigned = b.assigned;
+
+
+    if (update) {
+      Mission.update({
+        id: id
+      }, data).exec(function createCB(err, updated) {
+        cb(err, updated);
+      });
+    }
+
+    else {
+      Mission.create(data).exec(function createCB(err, updated) {
+        cb(err, updated);
+      });
+    }
 
   }
 

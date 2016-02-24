@@ -10,9 +10,12 @@ module.exports = {
   schema: false,
   autoCreatedAt: true,
   attributes: {
-      name: "string", // ex. Jane's Doe
-      class: "string", // ex. project
-      abbr: "string", // ex. JANE
-      slug: "string" // ex. janes-doe
+    name: "string", // ex. Jane's Doe
+    meta: {
+      type: "string",
+      defaultsTo: "project"
+    }, // ex. project
+    abbr: "string", // ex. JANE
+    slug: "string" // ex. janes-doe
   }
 };

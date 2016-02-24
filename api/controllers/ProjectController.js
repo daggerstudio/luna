@@ -70,12 +70,11 @@ module.exports = {
 
     Project.create({
       name: b.name,
-      meta: "project",
       abbr: b.abbr,
       slug: Mod.slugify(b.name),
     }).exec(function createCB(err, created) {
 
-      console.log("Project " + created.name + " (" + created.abbr + ").");
+      sails.log.info("Project " + created.name + " (" + created.abbr + ") created.");
 
       return res.redirect("/" + created.slug + "/");
     });

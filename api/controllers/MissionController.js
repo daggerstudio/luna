@@ -6,8 +6,9 @@ var markdown = require("markdown").markdown;
 
 module.exports = {
 
-  // Mission Listing
-  //----------------------------------------------------------------------------
+  //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  // Mission Listing (view)
+  //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   listing: function (req, res) {
 
     Missions.all(req, res, false, function (missions, project) {
@@ -21,8 +22,9 @@ module.exports = {
 
   },
 
-  // Closed Mission Listing
-  //----------------------------------------------------------------------------
+  //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  // Closed Mission Listing (view)
+  //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   complete: function (req, res) {
 
     var completedMissions = [];
@@ -45,40 +47,73 @@ module.exports = {
   },
 
 
-  // Single Mission View
-  //----------------------------------------------------------------------------
+  //============================================================================
+  // Single Mission (view)
+  //============================================================================
   view: function (req, res) {
 
-    Missions.single(req, res, true, function (mission, project, projectList) {
-      return res.view("mission/view", {
-        title: "Mission View",
-        action: "/mission/update/",
-        types: List.types(),
-        priorities: List.priorities(),
-        users: List.users(),
-        workflow: List.lanes(),
-        projectList: projectList,
-        project: project,
-        mission: mission
+    Missions.single(req, res, function (err, mission) {
+
+      // Error
+      //------------------------------------------------------------------------
+      if (err) {
+        sails.log.error(err); // Log to console
+        if (req.wantsJSON) return res.serverError(); // Send response
+      }
+
+      // Success
+      //------------------------------------------------------------------------
+      List.projects(function (err, projects) { // Fetch projects
+
+        // Error
+        //----------------------------------------------------------------------
+        if (err) {
+          sails.log.error(err); // Log to console
+          if (req.wantsJSON) return res.serverError(); // Send response
+        }
+
+        // Success
+        //----------------------------------------------------------------------
+        if (req.wantsJSON) return res.ok(mission); // Send response
+        return res.view("mission/view", {
+          mission: mission,
+          project: {
+            name: mission.project,
+            slug: mission.projectSlug
+          },
+          priorities: List.priorities(),
+          types: List.types(),
+          projects: projects,
+          users: List.users(),
+          workflow: List.lanes()
+        });
+
       });
+
     });
 
   },
-
-  // Create New Mission
-  //----------------------------------------------------------------------------
+  //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  // Create New Mission (view)
+  //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   create: function (req, res) {
     var projects;
 
     List.projects(function (err, result) {
 
-      if (err) console.log("Error");
+      // Error
+      //------------------------------------------------------------------------
+      if (err) {
+        sails.log.error(err); // Log to console
+        if (req.wantsJSON) return res.serverError(); // Send response
+      }
 
       return res.view("mission/create", {
         title: "Mission Create",
         action: "/mission/new/",
         currentProject: req.params.project,
         projects: result,
+        users: List.users(),
         types: List.types(),
         priorities: List.priorities(),
         workflow: List.lanes()
@@ -86,85 +121,58 @@ module.exports = {
     });
   },
 
-
-  // Update Request
-  //----------------------------------------------------------------------------
+  //============================================================================
+  // Update Request (endpoint)
+  //============================================================================
   update: function (req, res) {
 
-    var b = req.body; // Reference to req.body
-
-    console.log(Mod.uid(b.name));
-
-    // If the request want's JSON and does not supply absolute name
-    if (req.wantsJSON && !b.absName) b.absName = b.name;
-
-    Mission.update({
-      name: b.absName // Absolute name (previous if changed)
-    }, {
-      name: b.name,
-      meta: "mission",
-      slug: Mod.slugify(b.name),
-      complete: b.complete || false,
-      project: b.project,
-      projectSlug: Mod.slugify(b.project),
-      epic: b.epic,
-      type: b.type,
-      priority: b.priority,
-      workflow: b.workflow,
-      assigned: b.assigned,
-    }).exec(function createCB(err, updated) {
+    Missions.populate(req, res, true, function (err, updated) {
 
       // Error
-      if (err) sails.log.error(err);
+      //------------------------------------------------------------------------
+      if (err) {
+        sails.log.error(err); // Log to console
+        if (req.wantsJSON) return res.serverError(); // Send response
+      }
 
       // Success
-      else {
+      //------------------------------------------------------------------------
+      sails.log.info("Mission " + updated[0].name + " updated."); // Log to console
+      if (req.wantsJSON) return res.ok(); // Send response
 
-        // Log success to the console
-        sails.log.info("Mission " + updated[0].name + " updated.");
-
-        // Send response
-        if (req.wantsJSON) return res.ok();
-
-        // Redirect the user
-        return res.redirect("/" + updated[0].projectSlug + "/missions/" + updated[0].slug + "/");
-
-      }
+      // Redirect the user
+      return res.redirect("/" + updated[0].projectSlug + "/missions/" + updated[0].slug + "/");
     });
-  },
 
-  // New
-  //----------------------------------------------------------------------------
+  },
+  //============================================================================
+  // New (endpoint)
+  //============================================================================
   new: function (req, res) {
 
-    var b = req.body; // Reference to req.body
-
-    Mission.create({
-      name: b.name,
-      meta: "mission",
-      slug: Mod.slugify(b.name),
-      project: b.project,
-      projectSlug: Mod.slugify(b.project),
-      epic: b.epic,
-      type: b.type,
-      desc: b.desc,
-      priority: b.priority,
-      workflow: b.workflow,
-      assigned: b.assigned,
-    }).exec(function createCB(err, created) {
+    Missions.populate(req, res, false, function (err, created) {
 
       // Error
-      if (err) sails.log.error(err);
+      //------------------------------------------------------------------------
+      if (err) {
+        sails.log.error(err); // Log to console
+        if (req.wantsJSON) return res.serverError(); // Send response
+      }
 
       // Success
+      //------------------------------------------------------------------------
       else {
-        // Log to the console and redirect the user
-        sails.log.info("Mission " + created.name + " created.");
+        sails.log.info("Mission " + created.name + " created."); // Log to console
+        if (req.wantsJSON) return res.ok(); // Send response
+
+        // Redirect the user
         return res.redirect("/" + created.projectSlug + "/missions/" + created.slug + "/");
       }
     });
   },
-
+  //============================================================================
+  // Delete (endpoint)
+  //============================================================================
   delete: function (req, res) {
 
     var b = req.body; // Reference to req.body

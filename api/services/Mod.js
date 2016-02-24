@@ -16,7 +16,12 @@ module.exports = {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   },
-  uid: function (str) {
+  uid: function () {
+
+    return ("000000" + (Math.random()*Math.pow(36,6) << 0).toString(36)).slice(-6);
+
+  },
+  abbr: function (str) {
 
     var clean = str.match(/\b(\w{2,})/g); // Get words larger then 1 letter
     var words = clean.join(" "); // Join the cleaned words back into a string

@@ -11,26 +11,20 @@ module.exports = {
   autoCreatedAt: true,
   autoUpdatedAt: true,
   attributes: {
+    meta: {
+      type: "string",
+      defaultsTo: "mission"
+    },
     name: "string",
-    class: "string",
     slug: "string",
     project: "string",
     projectSlug: "string",
     epic: "string",
-    complete: {
-      type: "boolean",
-      defaultsTo: false
-    },
+    epicSlug: "string",
     type: {
       type: "string",
       enum: List.types(),
       defaultsTo: "task"
-    },
-    summaryMarkdown: {
-      type: "string",
-    },
-    summaryParsed: {
-      type: "string",
     },
     priority: {
       type: "string",
@@ -43,5 +37,9 @@ module.exports = {
       defaultsTo: "backlog"
     },
     assigned: "string",
+    complete: {
+      type: "boolean",
+      defaultsTo: false
+    },
   }
 };

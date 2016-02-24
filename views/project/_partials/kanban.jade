@@ -1,5 +1,5 @@
 if(missions[0]) 
-    .cover: .container: .row.row-inline._4
+    .cover: .container.fluid: .row.row-inline._4
         h2.sr Kanban
         .workflow
             each item in manifest
@@ -9,55 +9,17 @@ if(missions[0])
                             small  (#{item.limit})
                         ul.workflow-column(data-workflow="#{item.name}" data-limit="#{item.limit}")
                             each mission in item.missions
-                                li.mission(
-                                    id="#{mission.slug}"
-                                    class="#{mission.priority}"
-                                    data-payload="#{JSON.stringify(mission)}")
-                                
-                                    a.user(href="#")
-                                        img(
-                                        src="http://placehold.it/100x100"
-                                        alt="#{mission.assigned}"
-                                        title="#{mission.assigned}")
-                                    
-                                    h3.title #{mission.name}
-                                    
-                                    .meta
-                                        small.type #{mission.type}
-                                        a(
-                                            href="/#{project.slug}/missions/#{mission.slug}/edit/"
-                                        ).edit.icon-settings &nbsp;
-                                        
-                                    a.faux(href="/#{project.slug}/missions/#{mission.slug}/")
+                                include ../../mission/_partials/ticket 
                         .cover 
                                     
                                     
-    .cover: .container: .row
-        h2.title Mission Backlog
+    .cover: .container.fluid: .row
+        h2.title Mission Backlog 
         each item in manifest
             if(item.name == "backlog")
-                ul.workflow-column.no-padding(data-workflow="#{item.name}" data-limit="#{item.limit}")
+                ul.workflow-column.wide.no-padding(data-workflow="#{item.name}" data-limit="#{item.limit}")
                     each mission in item.missions
-                        li.mission.wide(
-                            id="#{mission.slug}"
-                            class="#{mission.priority}"
-                            data-payload="#{JSON.stringify(mission)}")
-                        
-                            a.user(href="#")
-                                img(
-                                src="http://placehold.it/100x100"
-                                alt="#{mission.assigned}"
-                                title="#{mission.assigned}")
-                            
-                            h3.title #{mission.name}
-                            
-                            .meta
-                                small.type #{mission.type}
-                                a(
-                                    href="/#{project.slug}/missions/#{mission.slug}/edit/"
-                                ).edit.icon-settings &nbsp;
-                                
-                            a.faux(href="/#{project.slug}/missions/#{mission.slug}/")
+                        include ../../mission/_partials/ticket 
         
                 
                 

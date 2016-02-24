@@ -35,7 +35,7 @@ module.exports.routes = {
   //----------------------------------------------------------------------------
 
   // New Project
-  "post /project/new/": {
+  "post /projects/new/": {
     controller: "Project",
     action: "new",
     skipAssets: true
@@ -108,7 +108,7 @@ module.exports.routes = {
   },
 
   // Single Mission View
-  "get /:project/missions/:slug/": {
+  "get /:projectSlug/missions/:missionSlug/": {
     controller: "Mission",
     action: "view",
     skipAssets: true

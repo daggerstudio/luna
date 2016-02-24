@@ -1,6 +1,11 @@
 .cover.light: .container
 
     form(action="/mission/update/" method="POST")
+    
+        // Hidden values
+        
+        input.sr(name="id" value="#{mission.id}")
+    
         
         .row: .col
             .field-group
@@ -20,8 +25,8 @@
                 .field-group
                     label Project
                     select.small(name="project")
-                        each list in projectList
-                            if(list.name == project.name)
+                        each list in projects
+                            if(list.name == mission.project)
                                 option(value="#{list.name}" selected) #{list.name}
                             else
                                 option(value="#{list.name}") #{list.name}
