@@ -1,31 +1,44 @@
-extend ../_layouts/standard.jade
 
-block content
+.row
 
-    .cover: .container.fluid
+    nav.breadcrumbs
+        ol
+            li
+                a(href="/projects/"): span Projects
+                | &#8250;
+            li
+                a(href="/#{mission.projectSlug}/"): span #{mission.project}
+
+    h1.title.primary.pull-left #{mission.name}
+        if(mission.complete)
+            span.secondary.ghost  - Completed!
+        else
+            span.secondary.ghost  - #{mission.workflow}
     
-        .row: .col
-            span.btn.pull-right(panel="standard" panel-target="#mission-edit") Edit Mission
+    .col.no-padding
+        p A <strong>#{mission.type}</strong> with <strong>#{mission.priority}</strong> priority
             
-        .row
-            
-            div #{mission.key}
-            div #{mission.name}
-            div #{mission.slug}
-            div Complete: #{mission.complete}
-            div #{mission.project}
-            div Slug: #{mission.projectSlug}
-            div #{mission.epic}
-            div #{mission.type}
-            div !{mission.summaryParsed}
-            div #{mission.summaryMarkdown}
-            div #{mission.priority}
-            div #{mission.workflow} 
-            div #{mission.assigned}
-                
+            if(mission.epic)
+                |  that contributes
+                br
+                |  to the completion of&nbsp;
+                strong: a(href="/#{mission.projectSlug}/#{mission.epicSlug}/") #{mission.epic}
+            | .
     
-    #mission-edit.panel-aside
-        span.btn.close(panel="standard" panel-target="#mission-edit")
+.row.row-ratio
+
+    if(mission.info.summary)
+        | !{mission.info.summary}
+    
+.row
+    
+    div #{mission.key}
+    div #{mission.assigned}
+    
+    if(mission.info.summary)
+        div Summary !{mission.info.summary}
+        div SummaryMD #{mission.info.summaryMD}
         
-        include _partials/edit
-    
+.row: .col.no-padding
+
+    include _partials/comment

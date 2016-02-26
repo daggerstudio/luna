@@ -8,9 +8,27 @@
 module.exports = {
   connection: "mongo",
   schema: false,
-  autoCreatedAt: true,
-  autoUpdatedAt: true,
+  autoCreatedAt: false,
+  autoUpdatedAt: false,
   attributes: {
-
+    summary: {
+      type: "string",
+      defaultsTo: ""
+    },
+    summaryMD: {
+      type: "string",
+      defaultsTo: ""
+    },
+    description: {
+      type: "string",
+      defaultsTo: ""
+    },
+    descriptionMD: {
+      type: "string",
+      defaultsTo: ""
+    },
+    history: {
+      type: "array"
+    }
   }
 };

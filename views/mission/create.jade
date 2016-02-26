@@ -10,6 +10,10 @@ html
             label Name 
             input(name="name" type="text") 
             
+            .field-group
+                label Mission Summary
+                textarea.full(name="summaryMD" type="text")
+            
             label Project (Current: #{currentProject}) 
             select(name="project")
                 each project in projects 

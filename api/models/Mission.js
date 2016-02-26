@@ -41,5 +41,8 @@ module.exports = {
       type: "boolean",
       defaultsTo: false
     },
+    info: {
+        model: "info"
+    }
   }
 };

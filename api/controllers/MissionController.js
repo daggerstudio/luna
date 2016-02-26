@@ -1,7 +1,6 @@
 //==============================================================================
 // MISSION CONTROLLER
 //==============================================================================
-var markdown = require("markdown").markdown;
 
 
 module.exports = {
@@ -74,7 +73,6 @@ module.exports = {
 
         // Success
         //----------------------------------------------------------------------
-        if (req.wantsJSON) return res.ok(mission); // Send response
         return res.view("mission/view", {
           mission: mission,
           project: {
@@ -161,13 +159,11 @@ module.exports = {
 
       // Success
       //------------------------------------------------------------------------
-      else {
-        sails.log.info("Mission " + created.name + " created."); // Log to console
-        if (req.wantsJSON) return res.ok(); // Send response
+      sails.log.info("Mission " + created.name + " created."); // Log to console
+      if (req.wantsJSON) return res.ok(); // Send response
 
-        // Redirect the user
-        return res.redirect("/" + created.projectSlug + "/missions/" + created.slug + "/");
-      }
+      // Redirect the user
+      return res.redirect("/" + created.projectSlug + "/missions/" + created.slug + "/");
     });
   },
   //============================================================================

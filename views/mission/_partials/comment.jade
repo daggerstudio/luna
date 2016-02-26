@@ -1,0 +1,17 @@
+if(mission.info && mission.info.history)
+
+    h2.title.divider Activity
+    each update in mission.info.history
+    
+        .comment !{update.comment}
+
+
+form#comment-form(action="/mission/update/" method="POST") 
+    
+    input.sr(name="id" value="#{mission.id}") 
+    input.sr(name="missionSlug" value="#{mission.slug}") 
+    input.sr(name="projectSlug" value="#{mission.projectSlug}") 
+
+    textarea(name="commentMD")
+    
+    input.btn(type="submit" value="Comment")

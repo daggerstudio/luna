@@ -1,6 +1,9 @@
 //==============================================================================
 // MOD
 //==============================================================================
+
+var markdown = require("markdown").markdown;
+
 module.exports = {
 
   slugify: function (str) {
@@ -17,9 +20,10 @@ module.exports = {
     });
   },
   uid: function () {
-
-    return ("000000" + (Math.random()*Math.pow(36,6) << 0).toString(36)).slice(-6);
-
+    return ("000000" + (Math.random() * Math.pow(36, 6) << 0).toString(36)).slice(-6);
+  },
+  md: function (str) {
+    if(str) return markdown.toHTML(str);
   },
   abbr: function (str) {
 
@@ -50,5 +54,9 @@ module.exports = {
     }
 
     return create().toUpperCase();
+  },
+  ts: function () {
+    var date = new Date();
+    return date.toISOString();
   }
 };
